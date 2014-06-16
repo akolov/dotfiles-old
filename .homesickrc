@@ -4,5 +4,5 @@ fish = %x( which fish )
 if $?.exitstatus == 0
   %x( curl -L https://github.com/bpinto/oh-my-fish/raw/master/tools/install.fish | fish )
 else
-  print "Fish is not installed"
+  puts "Fish is not installed"
 end

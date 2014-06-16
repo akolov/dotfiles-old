@@ -1,0 +1,27 @@
+[user]
+	name = Alexander Kolov
+	email = me@alexkolov.com
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[diff]
+	tool = Kaleidoscope
+[difftool]
+	prompt = false
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+[mergetool]
+	prompt = false
+	keepBackup = true
+[merge]
+	tool = Kaleidoscope
+[push]
+	default = simple
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+
+[alias]
+	ctag = "!f() { git tag -a -m $1 $1; git push --tags; }; f" 
+	dtag = "!f() { git tag -d $1; git push origin :refs/tags/$1; }; f"
+

@@ -1,4 +1,4 @@
-# helper functions
+# Helper functions
 
 function path_prepend --description "Insert existing directories to the begining of PATH"
    for i in $argv
@@ -7,7 +7,7 @@ function path_prepend --description "Insert existing directories to the begining
       end
    end
 end
- 
+
 function path_append --description "Append existing directories the the end of PATH"
     for i in $argv
         if test -d $i
@@ -16,26 +16,11 @@ function path_append --description "Append existing directories the the end of P
     end
 end
 
-function git-create-tag
-    git tag -a -m $argv
-    git push --tags
-end
-
-function git-delete-tag
-    git tag -d $argv
-    git push origin :refs/tags/$argv
-end
-
-# configuration
+# Configuration
 
 set -x LANG en_US.UTF-8
 set -x LC_ALL en_US.UTF-8
-set -x EDITOR /usr/local/bin/mate
-#set -x PYTHONPATH /usr/local
-set -x RBENV_ROOT /usr/local/var/rbenv
-set -x HOMEBREW_GITHUB_API_TOKEN 10c9169ca19cc48f77729ce1edb706e639d496eb
 
-# insert homebrew's bin and sbin to the beginig of PATH
 path_prepend /usr/local/sbin
 
 # Path to your oh-my-fish.
@@ -53,5 +38,17 @@ set fish_plugins brew jump python rbenv
 . $fish_path/oh-my-fish.fish
 
 alias grep "grep --color=auto"
-alias fixfinder "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
-alias swift "xcrun swift"
+
+# Platform-dependent settings
+switch (uname)
+  case Darwin
+    set -x EDITOR /usr/local/bin/atom
+    set -x RBENV_ROOT /usr/local/var/rbenv
+    set -x HOMEBREW_GITHUB_API_TOKEN 10c9169ca19cc48f77729ce1edb706e639d496eb
+
+    alias fixfinder "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
+    alias swift "xcrun swift"
+    alias swift "xcrun swift"
+    alias flushdns "sudo dscacheutil -flushcache"
+    alias gh "open (git remote -v | grep git@github.com | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e's/:/\//' -e 's/git@/http:\/\//')"
+end

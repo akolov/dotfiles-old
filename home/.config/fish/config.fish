@@ -50,5 +50,5 @@ switch (uname)
     alias swift "xcrun swift"
     alias swift "xcrun swift"
     alias flushdns "sudo dscacheutil -flushcache"
-    alias gh "open (git remote -v | grep git@github.com | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e's/:/\//' -e 's/git@/http:\/\//')"
+    alias gh "open (git remote -v | grep github.com | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -E 's/.*(github\.com.*)/\1/')"
 end

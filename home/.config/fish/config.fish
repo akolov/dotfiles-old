@@ -39,7 +39,7 @@ set fish_plugins brew jump python rbenv
 
 alias grep "grep --color=auto"
 
-. (rbenv init - | psub)
+eval "$(rbenv init -)"
 
 # Platform-dependent settings
 switch (uname)

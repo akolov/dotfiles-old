@@ -22,6 +22,7 @@ set -x LANG en_US.UTF-8
 set -x LC_ALL en_US.UTF-8
 
 path_prepend /usr/local/sbin
+path_prepend ~/.bin
 
 # Path to your oh-my-fish.
 set fish_path $HOME/.oh-my-fish

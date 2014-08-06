@@ -35,8 +35,6 @@ switch (uname)
     set -x HOMEBREW_GITHUB_API_TOKEN 10c9169ca19cc48f77729ce1edb706e639d496eb
 
     alias fixfinder "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
-    alias swift "xcrun swift"
-    alias swift "xcrun swift"
     alias flushdns "sudo dscacheutil -flushcache"
 end
 
@@ -52,4 +50,3 @@ set fish_plugins brew jump python rbenv
 . $fish_path/oh-my-fish.fish
 
 alias grep "grep --color=auto"
-

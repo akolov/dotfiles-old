@@ -25,3 +25,5 @@
 	ctag = "!f() { git tag -a -m $1 $1; git push --tags; }; f" 
 	dtag = "!f() { git tag -d $1; git push origin :refs/tags/$1; }; f"
 
+[credential]
+	helper = osxkeychain

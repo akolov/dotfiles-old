@@ -44,9 +44,13 @@ set fish_theme robbyrussell
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-fish/plugins/*)
 # Custom plugins may be added to ~/.oh-my-fish/custom/plugins/
 # Example format: set fish_plugins autojump bundler
-set fish_plugins brew jump python rbenv
+set fish_plugins brew jump python rbenv mc percol
 
 # Load oh-my-fish configuration.
 . $fish_path/oh-my-fish.fish
 
 alias grep "grep --color=auto"
+
+function fish_user_key_bindings
+  bind \cr percol_select_history
+end

@@ -18,8 +18,9 @@
 [push]
 	default = simple
 [filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
 
 [alias]
 	ctag = "!f() { git tag -a -m $1 $1; git push --tags; }; f" 

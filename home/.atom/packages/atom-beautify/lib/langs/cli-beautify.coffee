@@ -23,13 +23,21 @@ module.exports = (getCmd, isStdout) ->
                 temp.cleanup()
                 # Delete the output path
                 fs.unlink outputPath, (err) ->
-                  console.log "Deleting output file", err  if err
+                  # console.log "Deleting output file", err if err
                   return
                 return
 
               # Process the command
-              processCmd = (cmd) ->
-                if cmd
+              processCmd = (cmd, optCallback) ->
+                if optCallback? and typeof optCallback is "function"
+                  # console.log('Optional Callback found')
+                  cb = callback # Save callback for later
+                  callback = (output) -> # Wrap callback (cb) with optCallback
+                    # console.log('Callback called!', output)
+                    optCallback(output, cb)
+
+                if typeof cmd is "string"
+
                   config = env: process.env
                   isWin = /^win/.test(process.platform)
                   unless isWin
@@ -38,8 +46,8 @@ module.exports = (getCmd, isStdout) ->
                     # This should normalize the $PATH
                     # by calling the external files that would usually
                     # change the $PATH variable on user login.
-                    $path = "[ -f ~/.bash_profile ] && source ~/.bash_profile;"
-                    $path += "[ -f ~/.bashrc ] && source ~/.bashrc;"
+                    $path = "[ -f ~/.bash_profile ] && source ~/.bash_profile > /dev/null 2>&1;"
+                    $path += "[ -f ~/.bashrc ] && source ~/.bashrc > /dev/null 2>&1;"
 
                     # See http://stackoverflow.com/a/638980/2578205
                     # for checking if file exists in Bash
@@ -68,20 +76,32 @@ module.exports = (getCmd, isStdout) ->
                           return
 
                     else
-                      console.log "Beautifcation Error: ", err
+                      console.error "Beautifcation Error: ", err
                       callback err
                       deleteOutputFile()
                     return
 
+                # Check if there's an error
+                else if cmd instanceof Error
+                  return callback(cmd)
                 else
-                  console.log "Beautify CLI command not valid."
-                  callback(new Error("Beautify CLI command not valid."))
-                return
+                  console.error "CLI Beautifier command not valid."
+                  return callback(new Error("CLI Beautifier command not valid."+
+                    " Invalid command '#{cmd}'."))
 
 
               # Get the command
-              cmd = getCmd(info.path, outputPath, options, processCmd) # jshint ignore: line
-              processCmd cmd  if typeof cmd is "string"
+              try
+                cmd = getCmd(info.path, outputPath, options, processCmd) # jshint ignore: line
+              catch e
+                return callback(e)
+
+              if typeof cmd is "string"
+                processCmd cmd
+              # Check if there's an error
+              else if cmd instanceof Error
+                return callback(cmd)
+
             return
 
           return

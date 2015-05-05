@@ -22,22 +22,51 @@ module.exports =
       if history.length > 300
         history.shift()
 
-      range = editor.getSelectedBufferRange()
-      stdout = ''
-      stderr = ''
+      if atom.project.rootDirectory?
+        commandString = "cd '#{atom.project.rootDirectory.path}' && #{commandString}"
+      properties = { reversed: true, invalidate: 'never' }
 
-      proc = spawn process.env.SHELL, ["-l", "-c", commandString]
-
-      proc.stdout.on 'data', (text) ->
-        stdout += text
-
-      proc.stderr.on 'data', (text) ->
-        stderr += text
-
-      proc.on 'close', (code) ->
-        editor.setTextInBufferRange(range, stderr || stdout)
-        editor.setSelectedBufferRange(new Range(range.start, range.start))
+      ranges = editor.getSelectedBufferRanges()
+      wg = new WaitGroup ->
+        editor.commitTransaction()
         view.focus()
 
-      proc.stdin.write(editor.getSelectedText())
-      proc.stdin.end()
+      wg.add(ranges.length)
+
+      editor.beginTransaction()
+      for range, i in ranges
+        marker = editor.markBufferRange range, properties
+        processRange marker, editor, commandString, wg
+
+processRange = (marker, editor, commandString, wg) ->
+  stdout = ''
+  stderr = ''
+
+  proc = spawn process.env.SHELL, ["-l", "-c", commandString]
+
+  proc.stdout.on 'data', (text) ->
+    stdout += text
+
+  proc.stderr.on 'data', (text) ->
+    stderr += text
+
+  proc.on 'close', (code) ->
+    text = stderr || stdout
+    editor.setTextInBufferRange(marker.getBufferRange(), text)
+    wg.done()
+
+  proc.stdin.write(editor.getTextInBufferRange(marker.getBufferRange()))
+  proc.stdin.end()
+
+class WaitGroup
+  constructor: (cb) ->
+    @n = 0
+    @cb = cb
+
+  add: (n) ->
+    @n += n
+
+  done: ->
+    @n -= 1
+    if @n <= 0
+      @cb()

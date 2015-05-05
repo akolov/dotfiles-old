@@ -1,6 +1,6 @@
 {
   "name": "language-nginx",
-  "version": "0.4.0",
+  "version": "0.5.2",
   "description": "Syntax and snippet support for Nginx configuration files",
   "repository": {
     "type": "git",
@@ -17,10 +17,18 @@
     "url": "https://github.com/hnagato/atom-language-nginx/issues"
   },
   "homepage": "https://github.com/hnagato/atom-language-nginx",
-  "_id": "language-nginx@0.4.0",
-  "dist": {
-    "shasum": "8663f6d3ef27e76d4e5fe5b788d444970f21b7fb"
-  },
-  "_resolved": "/var/folders/zv/bhvss2_j1kg7wjkmlkvt8x9r0000gn/T/d-114715-44688-p4j1se/package.tgz",
-  "_from": "/var/folders/zv/bhvss2_j1kg7wjkmlkvt8x9r0000gn/T/d-114715-44688-p4j1se/package.tgz"
+  "_id": "language-nginx@0.5.2",
+  "_shasum": "4876757f5bf46a559af2403312b00de2974378e9",
+  "_resolved": "file:../d-115326-5829-1k95pf2/package.tgz",
+  "_from": "../d-115326-5829-1k95pf2/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
 }

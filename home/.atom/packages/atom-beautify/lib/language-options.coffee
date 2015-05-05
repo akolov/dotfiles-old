@@ -10,6 +10,7 @@ beautifyJS = null
 beautifyHTML = null
 beautifyCSS = null
 beautifySQL = null
+beautifyPerl = null
 beautifyPHP = null
 beautifyPython = null
 beautifyRuby = null
@@ -19,6 +20,7 @@ uncrustifyBeautifier = null
 beautifyHTMLERB = null
 beautifyMarkdown = null
 beautifyTypeScript = null
+beautifyTSS = null
 Analytics = null
 
 # Misc
@@ -29,6 +31,15 @@ pkg = require("../package.json")
 
 # Analytics
 analyticsWriteKey = "u3c26xkae8"
+
+# Get Atom defaults
+tabLength = atom.config.get('editor.tabLength')
+softTabs = atom.config.get('editor.softTabs')
+defaultIndentSize = (if softTabs then tabLength else 1)
+defaultIndentChar = (if softTabs then " " else "\t")
+defaultIndentWithTabs = not softTabs
+
+#
 module.exports =
 
   # Supported unique configuration keys
@@ -38,6 +49,7 @@ module.exports =
     "html"
     "css"
     "sql"
+    "perl"
     "php"
     "python"
     "ruby"
@@ -60,86 +72,339 @@ module.exports =
     # jshint ignore: start
 
     # JavaScript
-    js_indent_size: 2
-    js_indent_char: " "
-    js_indent_level: 0
-    js_indent_with_tabs: false
-    js_preserve_newlines: true
-    js_max_preserve_newlines: 10
-    js_jslint_happy: false
-    js_brace_style: "collapse"
-    js_keep_array_indentation: false
-    js_keep_function_indentation: false
-    js_space_before_conditional: true
-    js_break_chained_methods: false
-    js_eval_code: false
-    js_unescape_strings: false
-    js_wrap_line_length: 0
+    js_indent_size:
+        type: 'integer'
+        default: defaultIndentSize
+        minimum: 0
+        description: "Indentation size/length"
+    js_indent_char:
+        type: 'string'
+        default: defaultIndentChar
+        minimum: 0
+        description: "Indentation character"
+    js_indent_level:
+        type: 'integer'
+        default: 0
+        description: "Initial indentation level"
+    js_indent_with_tabs:
+        type: 'boolean'
+        default: defaultIndentWithTabs
+        description: "Indentation uses tabs, overrides `Indent Size` and `Indent Char`"
+    js_preserve_newlines:
+        type: 'boolean'
+        default: true
+        description: "Preserve line-breaks"
+    js_max_preserve_newlines:
+        type: 'integer'
+        default: 10
+        description: "Number of line-breaks to be preserved in one chunk"
+    js_space_in_paren:
+        type: 'boolean'
+        default: false
+        description: "Add padding spaces within paren, ie. f( a, b )"
+    js_jslint_happy:
+        type: 'boolean'
+        default: false
+        description: "Enable jslint-stricter mode"
+    js_space_after_anon_function:
+        type: 'boolean'
+        default: false
+        description: "Add a space before an anonymous function's parens, ie. function ()"
+    js_brace_style:
+        type: 'string'
+        default: "collapse"
+        enum: ["collapse", "expand", "end-expand", "none"]
+        description: "[collapse|expand|end-expand|none]"
+    js_break_chained_methods:
+        type: 'boolean'
+        default: false
+        description: "Break chained method calls across subsequent lines"
+    js_keep_array_indentation:
+        type: 'boolean'
+        default: false
+        description: "Preserve array indentation"
+    js_keep_function_indentation:
+        type: 'boolean'
+        default: false
+        description: ""
+    js_space_before_conditional:
+        type: 'boolean'
+        default: true
+        description: ""
+    js_eval_code:
+        type: 'boolean'
+        default: false
+        description: ""
+    js_unescape_strings:
+        type: 'boolean'
+        default: false
+        description: "Decode printable characters encoded in xNN notation"
+    js_wrap_line_length:
+        type: 'integer'
+        default: 0
+        description: "Wrap lines at next opportunity after N characters"
+    js_end_with_newline:
+        type: 'boolean'
+        default: false
+        description: "End output with newline"
 
     # CSS
-    css_indent_size: 2
-    css_indent_Char: " "
+    css_indent_size:
+        type: 'integer'
+        default: defaultIndentSize
+        minimum: 0
+        description: "Indentation size/length"
+    css_indent_char:
+        type: 'string'
+        default: defaultIndentChar
+        minimum: 0
+        description: "Indentation character"
+    css_selector_separator_newline:
+        type: 'boolean'
+        default: false
+        description: "Add a newline between multiple selectors"
+    css_newline_between_rules:
+        type: 'boolean'
+        default: false
+        description: "Add a newline between CSS rules"
+    css_preserve_newlines:
+        type: 'boolean'
+        default: false
+        description: "(Only LESS/SASS/SCSS with Prettydiff) "+
+            "Retain empty lines. "+
+            "Consecutive empty lines will be converted to a single empty line."
+
 
     # HTML
-    html_indent_inner_html: false
-    html_indent_size: 2
-    html_indent_char: " "
-    html_brace_style: "collapse"
-    html_indent_scripts: "normal"
-    html_wrap_line_length: 250
+    html_htmlbeautifier_path:
+        title: "htmlbeautifier path"
+        type: 'string'
+        default: ""
+        description: "Path to the `htmlbeautifier` CLI executable"
+    html_indent_inner_html:
+        type: 'boolean'
+        default: false
+        description: "Indent <head> and <body> sections."
+    html_indent_size:
+        type: 'integer'
+        default: defaultIndentSize
+        minimum: 0
+        description: "Indentation size/length"
+    html_indent_char:
+        type: 'string'
+        default: defaultIndentChar
+        minimum: 0
+        description: "Indentation character"
+    html_brace_style:
+        type: 'string'
+        default: "collapse"
+        enum: ["collapse", "expand", "end-expand", "none"]
+        description: "[collapse|expand|end-expand|none]"
+    html_indent_scripts:
+        type: 'string'
+        default: "normal"
+        enum: ["keep", "separate", "normal"]
+        description: "[keep|separate|normal]"
+    html_wrap_line_length:
+        type: 'integer'
+        default: 250
+        description: "Maximum characters per line (0 disables)"
+    html_wrap_attributes:
+        type: 'string'
+        default: "auto"
+        enum: ["auto", "force"]
+        description: "Wrap attributes to new lines [auto|force]"
+    html_wrap_attributes_indent_size:
+        type: 'integer'
+        default: defaultIndentSize
+        minimum: 0
+        description: "Indent wrapped attributes to after N characters"
+    html_preserve_newlines:
+        type: 'boolean'
+        default: true
+        description: "Preserve line-breaks"
+    html_max_preserve_newlines:
+        type: 'integer'
+        default: 10
+        description: "Number of line-breaks to be preserved in one chunk"
+    html_unformatted:
+        type: 'array'
+        default: ['a', 'sub', 'sup', 'b', 'i', 'u']
+        items:
+            type: 'string'
+        description: "List of tags (defaults to inline) that should not be reformatted"
+    html_end_with_newline:
+        type: 'boolean'
+        default: false
+        description: "End output with newline"
 
     # SQL
-    sql_indent_size: 2
-    sql_keywords: "upper"
-    sql_identifiers: "lower"
-    sql_sqlformat_path: ""
+    sql_indent_size:
+        type: 'integer'
+        default: defaultIndentSize
+        minimum: 0
+        description: "Indentation size/length"
+    sql_keywords:
+        type: 'string'
+        default: "upper"
+        description: "Change case of keywords"
+        enum: ["lower","upper","capitalize"]
+    sql_identifiers:
+        type: 'string'
+        default: "lower"
+        description: "Change case of identifiers"
+        enum: ["lower","upper","capitalize"]
+    sql_sqlformat_path:
+        type: 'string'
+        default: ""
+        description: "Path to the `sqlformat` CLI executable"
 
     # Markdown
-    markdown_pandoc_path: ""
+    markdown_pandoc_path:
+        type: 'string'
+        default: ""
+        description: "Path to the `pandoc` CLI executable"
+    markdown_yaml_front_matter:
+        type: 'boolean'
+        default: true
+        description: "Should also format YAML Front Matter (Jekyll) in Markdown"
+
+    # Perl
+    perl_perltidy_path:
+        type: 'string'
+        default: "perltidy"
+        description: "Path to the `perltidy` CLI executable"
+    perl_perltidy_profile:
+        type: 'string'
+        default: ""
+        description: "Specify a configuration file which will override the default name of .perltidyrc"
 
     # PHP
-    php_beautifier_path: ""
+    php_cs_fixer_path:
+        type: 'string'
+        default: ""
+        description: "Path to the `php-cs-fixer` CLI executable"
+    php_fixers:
+        type: 'string'
+        default: ""
+        description: "Add fixer(s). i.e. linefeed,-short_tag,indentation"
+    php_level:
+        type: 'string'
+        default: ""
+        description: "By default, all PSR-2 fixers and some additional ones are run."
 
     # Python
-    python_autopep8_path: ""
-    python_max_line_length: 79
-    python_indent_size: 4
-    python_ignore: ["E24"]
+    python_autopep8_path:
+        type: 'string'
+        default: ""
+        description: "Path to the `autopep8` CLI executable"
+    python_max_line_length:
+        type: 'integer'
+        default: 79
+        description: "set maximum allowed line length"
+    python_indent_size:
+      type: 'integer'
+      default: defaultIndentSize
+      minimum: 0
+      description: "Indentation size/length"
+    python_ignore:
+        type: 'array'
+        default: ["E24"]
+        items:
+            type: 'string'
+        description: "do not fix these errors/warnings"
 
     # Ruby
-    ruby_rbeautify_path: ""
+    ruby_rbeautify_path:
+        type: 'string'
+        default: ""
+        description: "Path to the `rbeautify` CLI executable"
 
     # C
-    c_uncrustifyPath: ""
-    c_configPath: ""
+    c_uncrustifyPath:
+        type: 'string'
+        default: ""
+        description: "Path to the `uncrustify` CLI executable"
+    c_configPath:
+        type: 'string'
+        default: ""
+        description: "Path to uncrustify config file. i.e. uncrustify.cfg"
 
     # C++
-    cpp_uncrustifyPath: ""
-    cpp_configPath: ""
+    cpp_uncrustifyPath:
+        title: "C++ Uncrustify Path"
+        type: 'string'
+        default: ""
+        description: "Path to the `uncrustify` CLI executable"
+    cpp_configPath:
+        title: "C++ Config Path"
+        type: 'string'
+        default: ""
+        description: "Path to uncrustify config file. i.e. uncrustify.cfg"
 
     # Objective-C
-    objectivec_uncrustifyPath: ""
-    objectivec_configPath: ""
+    objectivec_uncrustifyPath:
+        title: "Objective-C Uncrustify Path"
+        type: 'string'
+        default: ""
+        description: "Path to the `uncrustify` CLI executable"
+    objectivec_configPath:
+        title: "Objective-C Config Path"
+        type: 'string'
+        default: ""
+        description: "Path to uncrustify config file. i.e. uncrustify.cfg"
 
     # C#
-    cs_uncrustifyPath: ""
-    cs_configPath: ""
+    cs_uncrustifyPath:
+        title: "C# Uncrustify Path"
+        type: 'string'
+        default: ""
+        description: "Path to the `uncrustify` CLI executable"
+    cs_configPath:
+        title: "C# Config Path"
+        type: 'string'
+        default: ""
+        description: "Path to uncrustify config file. i.e. uncrustify.cfg"
 
     # D
-    d_uncrustifyPath: ""
-    d_configPath: ""
+    d_uncrustifyPath:
+        type: 'string'
+        default: ""
+        description: "Path to the `uncrustify` CLI executable"
+    d_configPath:
+        type: 'string'
+        default: ""
+        description: "Path to uncrustify config file. i.e. uncrustify.cfg"
 
     # Java
-    java_uncrustifyPath: ""
-    java_configPath: ""
+    java_uncrustifyPath:
+        type: 'string'
+        default: ""
+        description: "Path to the `uncrustify` CLI executable"
+    java_configPath:
+        type: 'string'
+        default: ""
+        description: "Path to uncrustify config file. i.e. uncrustify.cfg"
 
     # Pawn
-    pawn_uncrustifyPath: ""
-    pawn_configPath: ""
+    pawn_uncrustifyPath:
+        type: 'string'
+        default: ""
+        description: "Path to the `uncrustify` CLI executable"
+    pawn_configPath:
+        type: 'string'
+        default: ""
+        description: "Path to uncrustify config file. i.e. uncrustify.cfg"
 
     # VALA
-    vala_uncrustifyPath: ""
-    vala_configPath: ""
+    vala_uncrustifyPath:
+        type: 'string'
+        default: ""
+        description: "Path to the `uncrustify` CLI executable"
+    vala_configPath:
+        type: 'string'
+        default: ""
+        description: "Path to uncrustify config file. i.e. uncrustify.cfg"
 
   # jshint ignore: end
 
@@ -149,6 +414,8 @@ module.exports =
     # Beautify!
     unsupportedGrammar = false
     options = undefined
+    if atom.config.get("atom-beautify.disabledLanguages")?.indexOf(grammar) > - 1
+      return beautifyCompleted(null)
     switch grammar
       # Treat JSON as JavaScript, because it will support comments.
       # And Glavin001 has tested JSON beauifying with beautifyJS.
@@ -166,11 +433,11 @@ module.exports =
         beautifyHTML ?= require("js-beautify").html
         text = beautifyHTML(text, self.getOptions("html", allOptions))
         beautifyCompleted text
-      when "HTML (Liquid)", "HTML", "XML"
+      when "HTML (Liquid)", "HTML", "XML", "Marko", "Web Form/Control (C#)", "Web Handler (C#)"
         beautifyHTML ?= require("js-beautify").html
         text = beautifyHTML(text, self.getOptions("html", allOptions))
         beautifyCompleted text
-      when "HTML (Ruby - ERB)"
+      when "HTML (Ruby - ERB)", "HTML (Rails)"
         beautifyHTMLERB ?= require("./langs/html-erb-beautify")
         beautifyHTMLERB text, self.getOptions("html", allOptions), beautifyCompleted
       when "CSS"
@@ -178,18 +445,24 @@ module.exports =
         text = beautifyCSS(text, self.getOptions("css", allOptions))
         beautifyCompleted text
       when "Sass", "SCSS", "LESS"
-        beautifyLESS ?= require("./langs/less-beautify")
+        beautifyLESS ?= require("./langs/css-prettydiff-beautify")
         beautifyLESS text, self.getOptions("css", allOptions), beautifyCompleted
+      when "TSS"
+        beautifyTSS ?= require("./langs/tss-prettydiff-beautify")
+        beautifyTSS text, self.getOptions("css", allOptions), beautifyCompleted
       when "SQL (Rails)", "SQL"
         beautifySQL ?= require("./langs/sql-beautify")
         beautifySQL text, self.getOptions("sql", allOptions), beautifyCompleted
+      when "Perl"
+        beautifyPerl ?= require("./langs/perl-beautify")
+        beautifyPerl text, self.getOptions("perl", allOptions), beautifyCompleted
       when "PHP"
         beautifyPHP ?= require("./langs/php-beautify")
         beautifyPHP text, self.getOptions("php", allOptions), beautifyCompleted
       when "Python"
         beautifyPython ?= require("./langs/python-beautify")
         beautifyPython text, self.getOptions("python", allOptions), beautifyCompleted
-      when "Ruby"
+      when "Ruby", "Ruby on Rails"
         beautifyRuby ?= require("./langs/ruby-beautify")
         beautifyRuby text, self.getOptions("ruby", allOptions), beautifyCompleted
       when "GitHub Markdown"

@@ -6,3 +6,6 @@ if $?.exitstatus == 0
 else
   puts "Fish is not installed"
 end
+
+sudo pip install percol
+brew install autojump

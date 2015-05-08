@@ -32,7 +32,7 @@ switch (uname)
   case Darwin
     set -x EDITOR /usr/local/bin/atom
     set -x RBENV_ROOT /usr/local/var/rbenv
-    set -x HOMEBREW_GITHUB_API_TOKEN 10c9169ca19cc48f77729ce1edb706e639d496eb
+    set -x HOMEBREW_GITHUB_API_TOKEN (cat ~/.github_token)
 
     alias fixfinder "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
     alias flushdns "sudo dscacheutil -flushcache"

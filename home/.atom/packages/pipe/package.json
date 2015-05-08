@@ -1,0 +1,44 @@
+{
+  "name": "pipe",
+  "main": "./lib/pipe",
+  "version": "0.3.2",
+  "description": "Pipe text in and out of external commands.",
+  "activationEvents": [
+    "pipe:run"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moshee/atom-pipe"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.72.0"
+  },
+  "dependencies": {},
+  "readme": "# pipe\n\nSelect text to pipe into external commands and replace it with the output. Sort\nof like `!` in vim. Commands are sent to your `$SHELL`.\n\nDefault keybinding to activate is `cmd-;`.\n\n![pipe in action](https://i.ktkr.us/hoeJ)\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/moshee/atom-pipe/issues"
+  },
+  "homepage": "https://github.com/moshee/atom-pipe",
+  "_id": "pipe@0.3.2",
+  "dist": {
+    "shasum": "57c92dcd143d82418e2687ad1d635dbb66d61cb5"
+  },
+  "_resolved": "/private/var/folders/11/qznmhg015wj1x9sj6sthlysc0000gn/T/d-115020-17494-1mgqy1v/package.tgz",
+  "_from": "/private/var/folders/11/qznmhg015wj1x9sj6sthlysc0000gn/T/d-115020-17494-1mgqy1v/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".coffee": [
+        "lib/command-view.coffee",
+        "lib/pipe.coffee"
+      ],
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

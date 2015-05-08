@@ -35,7 +35,8 @@ switch (uname)
     set -x HOMEBREW_GITHUB_API_TOKEN (cat ~/.github_token)
 
     alias fixfinder "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
-    alias flushdns "sudo dscacheutil -flushcache"
+    alias flushdns "sudo discoveryutil mdnsflushcache; and sudo discoveryutil udnsflushcaches; and echo done"
+    alias bootcamp "sudo bless -mount /Volumes/BOOTCAMP --setBoot --nextonly; and sudo shutdown -r now"
 end
 
 # Theme
@@ -44,9 +45,13 @@ set fish_theme robbyrussell
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-fish/plugins/*)
 # Custom plugins may be added to ~/.oh-my-fish/custom/plugins/
 # Example format: set fish_plugins autojump bundler
-set fish_plugins brew jump python rbenv
+set fish_plugins brew jump python rbenv mc percol
 
 # Load oh-my-fish configuration.
 . $fish_path/oh-my-fish.fish
 
 alias grep "grep --color=auto"
+
+function fish_user_key_bindings
+  bind \cr percol_select_history
+end

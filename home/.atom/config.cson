@@ -1,0 +1,37 @@
+"*":
+  editor:
+    fontFamily: "PT Mono"
+    fontSize: 12
+    showIndentGuide: true
+    preferredLineLength: 120
+    invisibles: {}
+  core:
+    ignoredNames: [
+      "*.pyc"
+      ".DS_Store"
+      "*.egg-info"
+      ".git"
+      ".hg"
+      ".svn"
+      "Thumbs.db"
+    ]
+    themes: [
+      "atom-dark-ui"
+      "solarized-dark-syntax"
+    ]
+    projectHome: "/Users/alex/Projects"
+  "exception-reporting":
+    userId: "accf5858-549c-19e8-6a5d-a9ec85efbe1e"
+  welcome:
+    showOnStartup: false
+  metrics:
+    userId: "f2d142af701bb612582f047abf4b78256e33c865"
+  "tree-view":
+    hideIgnoredNames: true
+  "atom-beautify":
+    _analyticsUserId: "7e0f94ed-9bdb-4ea5-a97c-230558958b3d"
+".python.regexp.source":
+  editor: {}
+".python.source":
+  editor:
+    tabLength: 2

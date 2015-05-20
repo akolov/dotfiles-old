@@ -56,3 +56,17 @@ alias grep "grep --color=auto"
 function fish_user_key_bindings
   bind \cr percol_select_history
 end
+
+function update_xcode_plugins
+  set -lx xcode_paths /Applications/Xcode.app /Applications/Xcode-beta.app
+  for i in $xcode_paths
+    if test -d $i
+      set -lx uuid (defaults read $i/Contents/Info DVTPlugInCompatibilityUUID)
+      for f in (find ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins -name 'Info.plist')
+        if not grep -qs $uuid $f
+          PlistBuddy -c "Add :DVTPlugInCompatibilityUUIDs: string $uuid" $f
+        end
+      end
+    end
+  end
+end

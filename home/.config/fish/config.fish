@@ -40,16 +40,16 @@ switch (uname)
     alias bootcamp "sudo bless -mount /Volumes/BOOTCAMP --setBoot --nextonly; and sudo shutdown -r now"
 end
 
-# Theme
-set fish_theme robbyrussell
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-fish/plugins/*)
-# Custom plugins may be added to ~/.oh-my-fish/custom/plugins/
-# Example format: set fish_plugins autojump bundler
-set fish_plugins autojump brew jump python rbenv mc percol
-
 # Load oh-my-fish configuration.
 . $fish_path/oh-my-fish.fish
+
+Theme "robbyrussell"
+Plugin "brew"
+Plugin "jump"
+Plugin "python"
+Plugin "rbenv"
+Plugin "mc"
+Plugin "percol"
 
 alias grep "grep --color=auto"
 

@@ -7,5 +7,11 @@ else
   puts "Fish is not installed"
 end
 
-sudo pip install percol
-brew install autojump
+%x(sudo pip install percol)
+
+brew = %x( which brew )
+if $?.exitstatus == 0
+  %x(brew install autojump)
+else 
+  puts "Brew is not installed"
+end

@@ -62,8 +62,10 @@ function update_xcode_plugins
   for i in $xcode_paths
     if test -d $i
       set -lx uuid (defaults read $i/Contents/Info DVTPlugInCompatibilityUUID)
-      for f in (find ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins -name 'Info.plist')
+      echo "Found $i with $uuid"
+      for f in (find ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/ -name 'Info.plist')
         if not grep -qs $uuid $f
+          echo "Updating $f with $uuid"
           PlistBuddy -c "Add :DVTPlugInCompatibilityUUIDs: string $uuid" $f
         end
       end

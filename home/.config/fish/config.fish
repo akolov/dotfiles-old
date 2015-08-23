@@ -57,6 +57,10 @@ function fish_user_key_bindings
   bind \cr percol_select_history
 end
 
+function proj
+  cd "$HOME/Projects/$argv"
+end
+
 function update_xcode_plugins
   set -lx xcode_paths /Applications/Xcode.app /Applications/Xcode-beta.app
   for i in $xcode_paths

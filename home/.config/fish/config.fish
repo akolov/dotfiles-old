@@ -78,8 +78,8 @@ function update_xcode_plugins
 end
 
 function nuke_derived_data
-  set -l derived_path "~/Library/Developer/Xcode/DerivedData"
-  rm -rf $derived_path
+  set -l derived_path "$HOME/Library/Developer/Xcode/DerivedData"
+  rm -rf "$derived_path"
   if test $status = 0
     echo "Deleted $derived_path"
   else

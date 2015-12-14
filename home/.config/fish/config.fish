@@ -20,10 +20,6 @@ function fish_user_key_bindings
   bind \cr percol_select_history
 end
 
-function proj
-  cd "$HOME/Projects/$argv"
-end
-
 function update_xcode_plugins
   set -lx xcode_paths /Applications/Xcode.app /Applications/Xcode-beta.app
   for i in $xcode_paths
@@ -65,6 +61,7 @@ switch (uname)
     set -gx EDITOR /usr/local/bin/atom
     set -gx RBENV_ROOT /usr/local/var/rbenv
     set -gx HOMEBREW_GITHUB_API_TOKEN (cat ~/.github_token)
+    set -gx Z_SCRIPT_PATH  (brew --prefix)/etc/profile.d/z.sh
 
     alias fixfinder "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
     alias flushdns "sudo discoveryutil mdnsflushcache; and sudo discoveryutil udnsflushcaches; and echo done"

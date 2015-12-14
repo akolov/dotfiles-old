@@ -16,43 +16,6 @@ function path_append --description "Append existing directories the the end of P
     end
 end
 
-# Configuration
-
-set -x LANG en_US.UTF-8
-set -x LC_ALL en_US.UTF-8
-
-path_prepend /usr/local/sbin
-path_prepend ~/.bin
-path_append /usr/libexec
-
-# Path to your oh-my-fish.
-set fish_path $HOME/.oh-my-fish
-
-# Platform-dependent settings
-switch (uname)
-  case Darwin
-    set -x EDITOR /usr/local/bin/atom
-    set -x RBENV_ROOT /usr/local/var/rbenv
-    set -x HOMEBREW_GITHUB_API_TOKEN (cat ~/.github_token)
-
-    alias fixfinder "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
-    alias flushdns "sudo discoveryutil mdnsflushcache; and sudo discoveryutil udnsflushcaches; and echo done"
-    alias bootcamp "sudo bless -mount /Volumes/BOOTCAMP --setBoot --nextonly; and sudo shutdown -r now"
-end
-
-# Load oh-my-fish configuration.
-. $fish_path/oh-my-fish.fish
-
-Theme "robbyrussell"
-Plugin "brew"
-Plugin "jump"
-Plugin "python"
-Plugin "rbenv"
-Plugin "mc"
-Plugin "percol"
-
-alias grep "grep --color=auto"
-
 function fish_user_key_bindings
   bind \cr percol_select_history
 end
@@ -86,3 +49,35 @@ function nuke_derived_data
     echo "Failed to delete $derived_path"
   end
 end
+
+### Configuration
+
+set -gx LANG en_US.UTF-8
+set -gx LC_ALL en_US.UTF-8
+
+path_prepend /usr/local/sbin
+path_prepend ~/.bin
+path_append /usr/libexec
+
+# Platform-dependent settings
+switch (uname)
+  case Darwin
+    set -gx EDITOR /usr/local/bin/atom
+    set -gx RBENV_ROOT /usr/local/var/rbenv
+    set -gx HOMEBREW_GITHUB_API_TOKEN (cat ~/.github_token)
+
+    alias fixfinder "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
+    alias flushdns "sudo discoveryutil mdnsflushcache; and sudo discoveryutil udnsflushcaches; and echo done"
+    alias bootcamp "sudo bless -mount /Volumes/BOOTCAMP --setBoot --nextonly; and sudo shutdown -r now"
+end
+
+alias grep "grep --color=auto"
+
+# Path to Oh My Fish install.
+set -gx OMF_PATH /Users/alex/.local/share/omf
+
+# Customize Oh My Fish configuration path.
+#set -gx OMF_CONFIG /Users/alex/.config/omf
+
+# Load oh-my-fish configuration.
+source $OMF_PATH/init.fish

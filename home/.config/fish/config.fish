@@ -55,10 +55,13 @@ path_prepend /usr/local/sbin
 path_prepend ~/.bin
 path_append /usr/libexec
 
+if set mc_path (which mc)
+  set -gx EDITOR $mc_path
+end
+
 # Platform-dependent settings
 switch (uname)
   case Darwin
-    set -gx EDITOR /usr/local/bin/atom
     set -gx RBENV_ROOT /usr/local/var/rbenv
     set -gx HOMEBREW_GITHUB_API_TOKEN (cat ~/.github_token)
     set -gx Z_SCRIPT_PATH  (brew --prefix)/etc/profile.d/z.sh

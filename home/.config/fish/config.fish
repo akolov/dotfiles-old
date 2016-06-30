@@ -1,5 +1,3 @@
-# Helper functions
-
 function path_prepend --description "Insert existing directories to the begining of PATH"
    for i in $argv
       if test -d $i
@@ -51,6 +49,7 @@ end
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL en_US.UTF-8
 
+path_prepend ~/.rbenv/shims
 path_prepend /usr/local/sbin
 path_prepend ~/.bin
 path_append /usr/libexec
@@ -73,11 +72,11 @@ end
 
 alias grep "grep --color=auto"
 
-# Path to Oh My Fish install.
-set -gx OMF_PATH /Users/alex/.local/share/omf
+# Path to rbenv
+set -gx RBENV_ROOT "/Users/alex/.rbenv"
 
-# Customize Oh My Fish configuration path.
-#set -gx OMF_CONFIG /Users/alex/.config/omf
+# Path to Oh My Fish install.
+set -gx OMF_PATH "/Users/alex/.local/share/omf"
 
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish

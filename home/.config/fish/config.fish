@@ -37,6 +37,7 @@ path_prepend /usr/local/var/rbenv/shims
 path_prepend /usr/local/sbin
 path_prepend ~/.bin
 path_append /usr/libexec
+path_append ~/.fastlane/bin
 
 if set mc_path (which mcedit)
   set -gx EDITOR $mc_path

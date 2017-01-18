@@ -1,7 +1,5 @@
 package brew
 package jump
-package mc
-package percol
 package python
 package rbenv
 package z
@@ -12,4 +10,3 @@ theme clearance
 theme default
 theme eclm
 theme robbyrussell
-theme russell

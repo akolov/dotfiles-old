@@ -1,11 +1,16 @@
 #!/usr/bin/env ruby
 
-File.symlink "~/.config/nvim" "~/.vim"
-File.symlink "~/.config/nvim/init.vim" "~/.vimrc"
+{
+  File.expand_path("~/.vim") => File.expand_path("~/.config/nvim"),
+  File.expand_path("~/.vimrc") => File.expand_path("~/.config/nvim/init.vim")
+}.each do |k, v|
+  File.delete(k) if File.exists?(k)
+  File.symlink v, k
+end
 
 fish = %x( which fish )
 if $?.exitstatus == 0
-  %x( curl -L https://github.com/bpinto/oh-my-fish/raw/master/tools/install.fish | fish )
+  %x( curl -L http://get.oh-my.fish | fish )
 else
   puts "Fish is not installed"
 end

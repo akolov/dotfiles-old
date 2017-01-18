@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+%x( ln -s $HOME/.config/.vim $HOME/.vim )
+%x( ln -s $HOME/.config/.vim/init.vim $HOME/.vimrc )
+
 fish = %x( which fish )
 if $?.exitstatus == 0
   %x( curl -L https://github.com/bpinto/oh-my-fish/raw/master/tools/install.fish | fish )

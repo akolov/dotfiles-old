@@ -16,6 +16,8 @@ end
 
 function fish_user_key_bindings
   bind \cr percol_select_history
+  bind \e\b backward-kill-word
+  bind \cx\x7f backward-kill-line
 end
 
 function nuke_derived_data
@@ -38,7 +40,7 @@ path_prepend /usr/local/sbin
 path_prepend ~/.bin
 path_append /usr/libexec
 
-if set mc_path (which mc)
+if set mc_path (which mcedit)
   set -gx EDITOR $mc_path
 end
 

@@ -1,2 +1,4 @@
 .config
 .config/fish
+.config/nvim
+.vim

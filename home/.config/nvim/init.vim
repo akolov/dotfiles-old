@@ -12,9 +12,11 @@ filetype off
 call plug#begin('~/.vim/plugged')
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'keith/swift.vim'
+Plug 'landaire/deoplete-swift'
 Plug 'milch/vim-fastlane'
 Plug 'tpope/vim-sensible'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-syntastic/syntastic'
 call plug#end()
 
@@ -24,6 +26,11 @@ syntax on
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+
+
+let g:is_posix = 1
+
+let g:airline#extensions#tabline#enabled = 1
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -57,7 +64,9 @@ set expandtab                  " Insert spaces instead of actual tabs
 set smarttab                   " Delete entire shiftwidth of tabs when they're inserted
 set backspace=indent,eol,start
 set nostartofline              " Keep cursor in the same place after saves
-set showcmd                    " Show command information on the right side of the command line
+set noshowcmd                    " Show command information on the right side of the command line
+set noshowmode
+set noruler
 set isfname-==                 " Remove characters from filenames for gf
 set history=1000
 
@@ -119,11 +128,47 @@ set tags^=.tags       		       " Add local .tags file
 set path+=**
 
 " Completion options
-" set complete=.,w,b,u,t,i,kspell
-" set completeopt=menu
-" set wildmenu                                           " Better completion
-" in the CLI
-" set wildmode=longest:full,full                         " Completion settings
+set complete=.,w,b,u,t,i,kspell
+set completeopt=menu
+set wildmenu                                           " Better completion in the CLI
+set wildmode=longest:full,full                         " Completion settings
+
+" Ignore these folders for completions
+set wildignore+=.hg,.git,.svn                          " Version control
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg         " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest,*.pyc " compiled object files
+set wildignore+=tags,.tags
+
+" Dictionary for custom words
+set dictionary+=/usr/share/dict/words
+set spellfile=$HOME/.vim/custom-words.utf-8.add
+
+" Set mapping and key timeouts
+set timeout
+set timeoutlen=1000
+set ttimeoutlen=100
+
+" Setting to indent wrapped lines
+if exists('+breakindent')
+  set breakindent
+  set breakindentopt=shift:2
+endif
+
+" Check for file specific vim settings in the last 3 lines of the file
+set modeline
+set modelines=2
+
+if has('clipboard')     " If the feature is available
+  set clipboard=unnamed " copy to the system clipboard
+
+  if has('unnamedplus')
+    set clipboard+=unnamedplus
+  endif
+endif
 
 :nnoremap <Leader>s :SemanticHighlightToggle<cr>
+
+
+" Jump to the first placeholder by typing `<C-j>`.
+autocmd FileType swift imap <buffer> <C-j> <Plug>(deoplete_swift_jump_to_placeholder)
 

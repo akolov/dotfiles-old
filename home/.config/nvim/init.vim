@@ -10,10 +10,12 @@ endif
 filetype off
 
 call plug#begin('~/.vim/plugged')
+Plug 'gfontenot/vim-xcode'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'keith/swift.vim'
 Plug 'landaire/deoplete-swift'
 Plug 'milch/vim-fastlane'
+Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-sensible'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -27,7 +29,6 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-
 let g:is_posix = 1
 
 let g:airline#extensions#tabline#enabled = 1
@@ -39,6 +40,8 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 
 let g:mapleader="\<Space>"
+
+let g:xcode_runner_command = 'Dispatch! {cmd}'
 
 " Create a directory if it doesn't exist yet
 function! s:EnsureDirectory(directory)
@@ -167,7 +170,7 @@ if has('clipboard')     " If the feature is available
 endif
 
 :nnoremap <Leader>s :SemanticHighlightToggle<cr>
-
+:inoremap <C-d> <Del>
 
 " Jump to the first placeholder by typing `<C-j>`.
 autocmd FileType swift imap <buffer> <C-j> <Plug>(deoplete_swift_jump_to_placeholder)

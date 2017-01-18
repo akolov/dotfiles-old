@@ -35,10 +35,11 @@ end
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL en_US.UTF-8
 
-path_prepend ~/.rbenv/shims
+path_prepend /usr/local/var/rbenv/shims
 path_prepend /usr/local/sbin
 path_prepend ~/.bin
 path_append /usr/libexec
+path_append ~/.fastlane/bin
 
 if set mc_path (which mcedit)
   set -gx EDITOR $mc_path
@@ -47,7 +48,6 @@ end
 # Platform-dependent settings
 switch (uname)
   case Darwin
-    set -gx RBENV_ROOT /usr/local/var/rbenv
     set -gx HOMEBREW_GITHUB_API_TOKEN (cat ~/.github_token)
     set -gx Z_SCRIPT_PATH  (brew --prefix)/etc/profile.d/z.sh
 
@@ -57,9 +57,6 @@ switch (uname)
 end
 
 alias grep "grep --color=auto"
-
-# Path to rbenv
-set -gx RBENV_ROOT "/Users/alex/.rbenv"
 
 # Path to Oh My Fish install.
 set -gx OMF_PATH "/Users/alex/.local/share/omf"

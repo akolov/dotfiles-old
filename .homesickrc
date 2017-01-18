@@ -10,7 +10,7 @@ else
   puts "Fish is not installed"
 end
 
-%x(sudo pip install percol)
+%x(pip install percol)
 
 brew = %x( which brew )
 if $?.exitstatus == 0

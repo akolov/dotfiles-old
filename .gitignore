@@ -1,2 +1,4 @@
 fishd.*
 fish_history
+config.*.copy
+home/config/nvim/plugged/*

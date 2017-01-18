@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-%x( ln -s $HOME/.config/.vim $HOME/.vim )
-%x( ln -s $HOME/.config/.vim/init.vim $HOME/.vimrc )
+%x( ln -s $HOME/.config/nvim $HOME/.vim )
+%x( ln -s $HOME/.config/nvim/init.vim $HOME/.vimrc )
 
 fish = %x( which fish )
 if $?.exitstatus == 0

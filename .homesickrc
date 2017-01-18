@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-%x( ln -s $HOME/.config/nvim $HOME/.vim )
-%x( ln -s $HOME/.config/nvim/init.vim $HOME/.vimrc )
+File.symlink "~/.config/nvim" "~/.vim"
+File.symlink "~/.config/nvim/init.vim" "~/.vimrc"
 
 fish = %x( which fish )
 if $?.exitstatus == 0

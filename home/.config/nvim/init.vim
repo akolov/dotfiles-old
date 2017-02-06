@@ -41,7 +41,7 @@ let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 
 let g:mapleader="\<Space>"
 
-let g:xcode_runner_command = 'Dispatch! {cmd}'
+"let g:xcode_runner_command = 'Dispatch! {cmd}'
 
 " Create a directory if it doesn't exist yet
 function! s:EnsureDirectory(directory)
@@ -54,7 +54,7 @@ endfunction
 " a - Avoid pressing enter after saves
 set shortmess=Ia
 
-set shell=$SHELL
+set shell=/bin/bash
 set termencoding=utf-8
 set encoding=utf-8
 set autoindent                 " Indent the next line matching the previous line
@@ -67,7 +67,7 @@ set expandtab                  " Insert spaces instead of actual tabs
 set smarttab                   " Delete entire shiftwidth of tabs when they're inserted
 set backspace=indent,eol,start
 set nostartofline              " Keep cursor in the same place after saves
-set noshowcmd                    " Show command information on the right side of the command line
+set noshowcmd                  " Show command information on the right side of the command line
 set noshowmode
 set noruler
 set isfname-==                 " Remove characters from filenames for gf
@@ -98,34 +98,34 @@ set lazyredraw                   " Don't redraw vim in all situations
 set synmaxcol=300                " The max number of columns to try and highlight
 set noerrorbells                 " Don't make noise
 set autoread                     " Watch for file changes and auto update
-set showmatch      		           " Set show matching parenthesis
-set matchtime=2         			   " The amount of time matches flash
-set display=lastline        		 " Display super long wrapped lines<Paste>
-set number             			     " Shows line numbers
+set showmatch                    " Set show matching parenthesis
+set matchtime=2                  " The amount of time matches flash
+set display=lastline             " Display super long wrapped lines<Paste>
+set number                       " Shows line numbers
 set hidden                       " Hide buffers instead of closing them
-set cursorline              		 " Highlight the line the cursor is on
-set nrformats-=octal    		     " Never use octal notation
-set nojoinspaces          		   " Don't add 2 spaces when using J
-set mouse=a               		   " Enable using the mouse if terminal emulator
-set mousehide              			 " Hide the mouse on typing
-set hlsearch              	 	   " Highlight search terms
-set incsearch        				     " Show searches as you type
-set wrap             			       " Softwrap text
-set linebreak             			 " Don't wrap in the middle of words
-set ignorecase        		       " Ignore case when searching
-set smartcase            			   " Ignore case if search is lowercase, otherwise case-sensitive
-set title           		         " Change the terminal's title
-set updatetime=2000      			   " Set the time before plugins assume you're not typing
-set scrolloff=5			             " Lines the cursor is to the edge before scrolling
-set sidescrolloff=5 			       " Same as scrolloff but horizontal
-set gdefault              			 " Adds g at the end of substitutions by default
-set virtualedit=block			       " Allow the cursor to move off the side in visual block
-set foldlevelstart=99  			     " Set the default level of open folds
-set foldmethod=indent   			   " Decide where to fold based
-set foldnestmax=5  			         " Set deepest fold to x levels
-set exrc    		                 " Source local .vimrc files
-set secure       			           " Don't load autocmds from local .vimrc files
-set tags^=.tags       		       " Add local .tags file
+set cursorline                   " Highlight the line the cursor is on
+set nrformats-=octal             " Never use octal notation
+set nojoinspaces                 " Don't add 2 spaces when using J
+set mouse=a                      " Enable using the mouse if terminal emulator
+set mousehide                    " Hide the mouse on typing
+set hlsearch                     " Highlight search terms
+set incsearch                    " Show searches as you type
+set wrap                         " Softwrap text
+set linebreak                    " Don't wrap in the middle of words
+set ignorecase                   " Ignore case when searching
+set smartcase                    " Ignore case if search is lowercase, otherwise case-sensitive
+set title                        " Change the terminal's title
+set updatetime=2000              " Set the time before plugins assume you're not typing
+set scrolloff=5                  " Lines the cursor is to the edge before scrolling
+set sidescrolloff=5              " Same as scrolloff but horizontal
+set gdefault                     " Adds g at the end of substitutions by default
+set virtualedit=block            " Allow the cursor to move off the side in visual block
+set foldlevelstart=99            " Set the default level of open folds
+set foldmethod=indent            " Decide where to fold based
+set foldnestmax=5                " Set deepest fold to x levels
+set exrc                         " Source local .vimrc files
+set secure                       " Don't load autocmds from local .vimrc files
+set tags^=.tags                  " Add local .tags file
 
 " Make |:find| discover recursive paths
 set path+=**

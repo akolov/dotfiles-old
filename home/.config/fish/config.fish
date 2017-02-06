@@ -41,8 +41,8 @@ path_prepend ~/.bin
 path_append /usr/libexec
 path_append ~/.fastlane/bin
 
-if set mc_path (which mcedit)
-  set -gx EDITOR $mc_path
+if set nvim_path (which nvim)
+  set -gx EDITOR $nvim_path
 end
 
 # Platform-dependent settings

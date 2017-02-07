@@ -1,4 +1,5 @@
 package brew
+package https://github.com/oh-my-fish/plugin-percol.git
 package jump
 package python
 package rbenv

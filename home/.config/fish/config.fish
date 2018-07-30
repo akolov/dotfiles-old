@@ -35,6 +35,7 @@ end
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL en_US.UTF-8
 
+path_prepend /usr/local/opt/python/libexec/bin
 path_prepend /usr/local/var/rbenv/shims
 path_prepend /usr/local/sbin
 path_prepend ~/.bin

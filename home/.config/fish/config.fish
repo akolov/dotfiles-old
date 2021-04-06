@@ -1,17 +1,19 @@
-function path_prepend --description "Insert existing directories to the begining of PATH"
-   for i in $argv
-      if test -d $i
-          set -x PATH $i $PATH
-      end
-   end
+# Functions
+
+function path_prepend --description "Insert existing directories to the beginning of PATH"
+  for i in $argv
+    if test -d $i
+      set -x PATH $i $PATH
+    end
+  end
 end
 
 function path_append --description "Append existing directories the the end of PATH"
-    for i in $argv
-        if test -d $i
-            set -x PATH $PATH $i
-        end
+  for i in $argv
+    if test -d $i
+      set -x PATH $PATH $i
     end
+  end
 end
 
 function fish_user_key_bindings
@@ -46,23 +48,22 @@ if set nvim_path (which nvim)
   set -gx EDITOR $nvim_path
 end
 
-# Platform-dependent settings
-switch (uname)
-  case Darwin
-    set -gx HOMEBREW_GITHUB_API_TOKEN (cat ~/.github_token)
-    set -gx Z_SCRIPT_PATH  (brew --prefix)/etc/profile.d/z.sh
-
-    alias fixfinder "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
-    alias flushdns "sudo discoveryutil mdnsflushcache; and sudo discoveryutil udnsflushcaches; and echo done"
-    alias bootcamp "sudo bless -mount /Volumes/BOOTCAMP --setBoot --nextonly; and sudo shutdown -r now"
-end
+set -gx HOMEBREW_GITHUB_API_TOKEN (cat ~/.github_token)
+set -gx Z_SCRIPT_PATH  (brew --prefix)/etc/profile.d/z.sh
+set -gx OMF_PATH "/Users/alex/.local/share/omf"
 
 alias grep "grep --color=auto"
 
-# Path to Oh My Fish install.
-set -gx OMF_PATH "/Users/alex/.local/share/omf"
-
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
+
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=(brew --prefix openssl@1.1)"
+
+# Platform-dependent settings
+switch (uname)
+  case Darwin
+    alias fixfinder "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
+    alias flushdns "sudo discoveryutil mdnsflushcache; and sudo discoveryutil udnsflushcaches; and echo done"
+end
 
 test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish

@@ -1,3 +1,3 @@
 ### Reveal LLDB commands support - DO NOT MODIFY
-command script import /Applications/Reveal.app/Contents/SharedSupport/Scripts/RevealServerCommands.py
+command script import /Users/alex/Library/Application\ Support/Reveal/RevealServerCommands.py
 ###

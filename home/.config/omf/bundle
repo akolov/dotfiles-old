@@ -1,6 +1,8 @@
 package brew
+package foreign-env
 package https://github.com/oh-my-fish/plugin-percol.git
 package jump
+package nvm
 package python
 package rbenv
 package z

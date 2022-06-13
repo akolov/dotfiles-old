@@ -1,21 +1,5 @@
 # Functions
 
-function path_prepend --description "Insert existing directories to the beginning of PATH"
-  for i in $argv
-    if test -d $i
-      set -x PATH $i $PATH
-    end
-  end
-end
-
-function path_append --description "Append existing directories the the end of PATH"
-  for i in $argv
-    if test -d $i
-      set -x PATH $PATH $i
-    end
-  end
-end
-
 function fish_user_key_bindings
   bind \cr percol_select_history
   bind \e\b backward-kill-word
@@ -37,12 +21,13 @@ end
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL en_US.UTF-8
 
-path_prepend /usr/local/opt/python/libexec/bin
-path_prepend /usr/local/var/rbenv/shims
-path_prepend /usr/local/sbin
-path_prepend ~/.bin
-path_append /usr/libexec
-path_append ~/.fastlane/bin
+fish_add_path /usr/local/opt/python/libexec/bin
+fish_add_path /usr/local/var/rbenv/shims
+fish_add_path /usr/local/sbin
+fish_add_path ~/.bin
+fish_add_path /usr/libexec
+fish_add_path ~/.fastlane/bin
+fish_add_path ~/Library/Application\ Support/multipass/bin
 
 if set nvim_path (which nvim)
   set -gx EDITOR $nvim_path
@@ -57,7 +42,10 @@ alias grep "grep --color=auto"
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
 
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=(brew --prefix openssl@1.1)"
+export RUBY_CONFIGURE_OPTS=--with-openssl-dir=(brew --prefix openssl@1.1)
+
+export SSL_CERT_FILE=/Users/alex/.proxyman/proxyman-ca.pem
+export REQUESTS_CA_BUNDLE=/Users/alex/.proxyman/proxyman-ca.pem
 
 # Platform-dependent settings
 switch (uname)
